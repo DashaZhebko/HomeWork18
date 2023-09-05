@@ -4,13 +4,14 @@ import java.util.Scanner;
 
 public class HomeWork18 {
     public static void main(String[] args) {
-        double sum = 0;
+        double totalSum = 0;
         List<Drinks> listDrinks = new ArrayList<>();
 
         HomeWork18.menu();
 
         Scanner scanner = new Scanner(System.in);
         String drinksChoice = scanner.nextLine();
+
         while (!drinksChoice.equals("yes")) {
             Drinks currentDrink = HomeWork18.getDrink(drinksChoice);
             if (currentDrink != null) {
@@ -18,14 +19,15 @@ public class HomeWork18 {
             }
             drinksChoice = scanner.nextLine();
         }
+        scanner.close();
 
         System.out.println("------Your order:-------");
-        for (Drinks d : listDrinks) {
-            sum = sum + d.price;
-            d.prepare();
+        for (Drinks drink : listDrinks) {
+            totalSum += drink.price;
+            drink.prepare();
         }
 
-        System.out.println("Pay for: $" + sum);
+        System.out.println("Pay for: $" + totalSum);
 
     }
 
@@ -38,33 +40,26 @@ public class HomeWork18 {
 
     public static Drinks getDrink(String drink) {
         drink = drink.toUpperCase();
-        DrinksMachine drinks = DrinksMachine.fineTypeDrinksMachine(drink);
-        if (drinks == null) {
+        DrinksMachine drinkType = DrinksMachine.fineTypeDrinksMachine(drink);
+        if (drinkType == null) {
             System.out.println(drink + " drink not found on the menu! Please, check the name of drink and enter again!");
             return null;
         }
-        switch (drinks) {
+        switch (drinkType) {
             case TEA:
-                Tea tea = new Tea(Drinks.PRICE_TEA, DrinksMachine.TEA);
-                return tea;
+                return new Tea(Drinks.PRICE_TEA, drinkType);
             case COFFEE:
-                Coffee coffee = new Coffee(Drinks.PRICE_COFFEE, DrinksMachine.COFFEE);
-                return coffee;
+                return new Coffee(Drinks.PRICE_COFFEE, drinkType);
             case MOJITO:
-                Mojito mojito = new Mojito(Drinks.PRICE_MOJITO, DrinksMachine.MOJITO);
-                return mojito;
+                return new Mojito(Drinks.PRICE_MOJITO, drinkType);
             case LEMONADE:
-                Lemonade lemonade = new Lemonade(Drinks.PRICE_MOJITO, DrinksMachine.LEMONADE);
-                return lemonade;
+                return new Lemonade(Drinks.PRICE_MOJITO, drinkType);
             case KOLA:
-                Kola kola = new Kola(Drinks.PRICE_KOLA, DrinksMachine.KOLA);
-                return kola;
+                return new Kola(Drinks.PRICE_KOLA, drinkType);
             case MINERAL:
-                MineralWater mineralWater = new MineralWater(Drinks.PRICE_MINERAL, DrinksMachine.MINERAL);
-                return mineralWater;
+                return new MineralWater(Drinks.PRICE_MINERAL, drinkType);
             default:
                 break;
-
         }
         return null;
     }
