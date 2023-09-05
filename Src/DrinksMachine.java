@@ -4,5 +4,17 @@ public enum DrinksMachine {
     LEMONADE,
     MOJITO,
     MINERAL,
-    KOLA
+    KOLA;
+
+    static DrinksMachine fineTypeDrinksMachine(String drinkName) {
+
+        for (DrinksMachine drink : DrinksMachine.values()) {
+            if (drinkName.equalsIgnoreCase(drink.toString())) {
+                return DrinksMachine.valueOf(drinkName);
+            }
+        }
+        return null;
+    }
 }
+
+

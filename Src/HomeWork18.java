@@ -11,12 +11,16 @@ public class HomeWork18 {
 
         Scanner scanner = new Scanner(System.in);
         String drinksChoice = scanner.nextLine();
-        while (!drinksChoice.equals("yes")){
-           listDrinks.add(HomeWork18.getDrink(drinksChoice));
+        while (!drinksChoice.equals("yes")) {
+            Drinks currentDrink = HomeWork18.getDrink(drinksChoice);
+            if (currentDrink != null) {
+                listDrinks.add(currentDrink);
+            }
             drinksChoice = scanner.nextLine();
         }
+
         System.out.println("------Your order:-------");
-        for (Drinks d: listDrinks) {
+        for (Drinks d : listDrinks) {
             sum = sum + d.price;
             d.prepare();
         }
@@ -34,9 +38,11 @@ public class HomeWork18 {
 
     public static Drinks getDrink(String drink) {
         drink = drink.toUpperCase();
-
-            DrinksMachine drinks = DrinksMachine.valueOf(drink);
-
+        DrinksMachine drinks = DrinksMachine.fineTypeDrinksMachine(drink);
+        if (drinks == null) {
+            System.out.println(drink + " drink not found on the menu! Please, check the name of drink and enter again!");
+            return null;
+        }
         switch (drinks) {
             case TEA:
                 Tea tea = new Tea(Drinks.PRICE_TEA, DrinksMachine.TEA);
